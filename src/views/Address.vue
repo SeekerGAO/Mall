@@ -131,7 +131,7 @@
     		<a href="javascript:;" class="btn btn--m" @click="delAddress">确认</a>
     		<a href="javascript:;" class="btn btn--m" @click="isMdShow = false">关闭</a>
     	</div>
-    </modal>	
+    </modal>
     <nav-footer></nav-footer>
   </div>
 </template>
@@ -163,17 +163,20 @@
 			this.init()
 		},
 		computed: {
+		  // 通过截取的商品地址列表长度,来显示截取的地址数量
 			addressListFilter() {
 				return this.addressList.slice(0, this.limit)
 			}
 		},
 		methods: {
+		  // 获取地址列表
 			init() {
 				axios.get('/users/addressList').then((response) => {
 					let res = response.data
 					if(res.status == '1') {
             this.addressList = res.result
 
+            // 把默认地址放在第一个位置
             let temp, indexOf
             this.addressList.forEach((item, index) => {
               if(item.isDefault == true) {
@@ -182,7 +185,7 @@
                  this.selectAddressId = item.addressId
               }
             })
-            
+
             // for (var i = 0, len = this.addressList.length; i < len; i++) {
             //     if (this.addressList[i]['isDefault'] == true) {
             //         temp = this.addressList[i]
@@ -196,6 +199,7 @@
 					}
 				})
 			},
+      // 截取商品地址列表的长度
 			expand() {
 				if(this.limit == 3) {
 					this.limit = this.addressList.length
@@ -203,6 +207,7 @@
 					this.limit = 3
 				}
 			},
+      // 设置默认地址
 			setDefalut(addressId) {
 				axios.post('/users/setDefault', {
 					addressId: addressId
@@ -220,17 +225,21 @@
 					}
 				})
 			},
+      // 选择地址
       selectAddress(index, selectAddressId) {
         this.checkIndex = index
         this.selectAddressId = selectAddressId
       },
+      // 关闭模态框
 			closeModal() {
 				this.isMdShow = false
 			},
+      // 确认是否删除地址
 			delAddressConfirm(addressId) {
 				this.isMdShow = true
 				this.addressId = addressId
 			},
+      // 删除地址
 			delAddress() {
 				this.isMdShow = true
 				axios.post('/users/delAddress', {
@@ -243,6 +252,7 @@
 					}
 				})
 			},
+      // 下一步
       skipNext() {
         this.$router.push({
           path: '/orderConfirm',

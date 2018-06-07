@@ -1,6 +1,4 @@
-/**
- * Created by jacksoft on 17/4/26.
- */
+// 格式化日期时间工具
 Date.prototype.Format = function (fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份

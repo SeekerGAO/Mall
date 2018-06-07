@@ -156,21 +156,25 @@
       currency: currency
     },
     methods: {
+		  // 获取到购物车列表
       init() {
         axios.get('/users/cartList').then((response) => {
           let res = response.data
           if(res.status == '1') {
             this.orderList = res.result
+            // 通过遍历购物车列表,找到已选中的商品进行金额的计算
             this.orderList.forEach((item) => {
               if(item.checked == '1') {
                 this.subTotal += item.productPrice * item.productNum
               }
             })
 
+            // 最终所需支付的金额
             this.orderTotal = this.subTotal + this.shipping - this.disCount + this.tax
           }
         })
       },
+      // 支付跳转的信息
       payMent() {
         axios.post('/users/payMent', {
           addressId: this.$route.query.addressId,
@@ -179,6 +183,7 @@
           let res = response.data
           if(res.status == '1') {
             this.$router.push({
+              // 需将支付后的id传给下一个页面
               path: '/orderSuccess?orderId=' + res.result.orderId
             })
           }

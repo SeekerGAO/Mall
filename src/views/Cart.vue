@@ -184,18 +184,24 @@ export default {
   mounted() {
     this.init()
   },
+  // 使用金额格式工具
   filters: {
   	currency: currency
   },
+  // 计算属性.若是其中的某个变量有所变化时,与其相关的信息都会得到更新
   computed: {
+    // 判断出选中状态的商品种数和购物车列表的长度是否相等,即是判断出购物车列表中的商品都是否有选中
+    // 若是都选中了,即是全选的状态
   	checkAllFlag() {
   		return this.checkedCount == this.cartList.length
   	},
+    // 遍历出在购物车列表中有哪些商品是已经选中的状态
   	checkedCount() {
   		let i = 0
   		this.cartList.forEach((item) => {
   			if(item.checked == '1') i++
   		})
+      // 返回选中状态的商品种数
   		return i
   	},
   	totalPrice() {
@@ -209,6 +215,7 @@ export default {
   	}
   },
   methods: {
+    // 获取购物车列表
     init() {
       axios.get('/users/cartList').then((response) => {
         let res = response.data
@@ -217,9 +224,11 @@ export default {
         }
       })
     },
+    // 关闭模态框
     closeModal() {
       this.modalConfirm = false
     },
+    // 删除购物车商品
     delCart() {
       axios.post('/users/cartDel', {
         productId: this.delItem.productId
@@ -232,19 +241,23 @@ export default {
         }
       })
     },
+    // 弹出确认是否商品商品的模态框,进一步操作
     delCartConfirm(item) {
       this.modalConfirm = true
       this.delItem = item
     },
+    // 对商品的编辑操作
     editCart(flag, item) {
+      // 增加按钮
       if (flag == 'add') {
         item.productNum++
-      } else if (flag == 'miuns') {
+      } else if (flag == 'miuns') {  //减少按钮
         if (item.productNum <= 1) {
           return
         }
         item.productNum--
       } else {
+        // 商品的选中状态的改变
         item.checked = item.checked == '1' ? '0' : '1'
       }
 
@@ -265,6 +278,7 @@ export default {
         this.$store.commit('updateCartCount', num)
       })
     },
+    // 全选状态的切换
     toggerCheckAll() {
       let flag = !this.checkAllFlag
       this.cartList.forEach((item) => {
@@ -280,6 +294,7 @@ export default {
         }
       })
     },
+    // 下一步
     checkOut() {
       if(this.checkedCount > 0) {
         this.$router.push({

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+//存放用户信息以及所对应的商品信息模型
 const userSchema = new Schema({
 	'userId' : String,
 	'userName' : String,
@@ -18,12 +19,12 @@ const userSchema = new Schema({
 	],
 	'addressList' : [
 		{
-			"addressId" : String, 
-            "userName" : String, 
-            "streetName" : String, 
-            "postCode" : String, 
-            "tell" : Number, 
-            "isDefault" : Boolean
+			"addressId" : String,
+      "userName" : String,
+      "streetName" : String,
+      "postCode" : String,
+      "tell" : Number,
+      "isDefault" : Boolean
 		}
 	]
 })

@@ -1,3 +1,4 @@
+// 格式化金额工具
 const digitsRE = /(\d{3})(?=\d)/g
 
 export function currency (value, currency, decimals) {

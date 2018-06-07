@@ -60,6 +60,7 @@
 			this.init()
 		},
 		methods: {
+		  // 获取到订单信息
 			init() {
 				let orderId = this.$route.query.orderId
 				axios.get('/users/orderDetail', {

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+// 存放商品信息模型
 const productSchema = new Schema({
 	'productId' : String,
 	'productName' : String,

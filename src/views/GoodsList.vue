@@ -50,6 +50,7 @@
     </div>
     <div class="md-overlay" v-show="overLayFlag" @click="closePop"></div>
 
+    // 插槽
     <modal v-bind:mdShow="mdShow" v-on:close="closeModal()">
       <p slot="message">
         请先登录，否则无法加入到购物车！
@@ -70,7 +71,7 @@
         <router-link class="btn btn--m btn--red" href="javascript:;" to="/cart">查看购物车</router-link>
       </div>
     </modal>
-    
+
     <nav-footer></nav-footer>
   </div>
 </template>
@@ -134,6 +135,7 @@ export default {
     this.getGoodsList()
   },
   methods: {
+    // 商品列表
     getGoodsList(flag) {
       let param = {
         page: this.page,
@@ -149,8 +151,9 @@ export default {
         this.loading = false
         if (res.status == '1') {
           if (flag) {
+            // 持续加载商品列表
             this.goodsList = this.goodsList.concat(res.result.list);
-
+            // 若是商品列表数量没有,则不再加载
             if (res.result.count == 0) {
               this.busy = true;
             } else {
@@ -168,23 +171,26 @@ export default {
     },
     showFilterPop() {
       this.filterBy = true,
-        this.overLayFlag = true
+      this.overLayFlag = true
     },
     closePop() {
       this.filterBy = false,
-        this.overLayFlag = false
+      this.overLayFlag = false
     },
+    // 通过价格区间来过滤商品
     setPriceFilter(index) {
       this.priceChecked = index
       this.page = 1
       this.getGoodsList()
       this.closePop()
     },
+    // 商品价格排序
     sortGoods() {
       this.sortFlag = !this.sortFlag
       this.page = 1
       this.getGoodsList()
     },
+    // 滚动持续加载商品列表
     loadMore() {
       this.busy = true;
       setTimeout(() => {
@@ -192,6 +198,7 @@ export default {
         this.getGoodsList(true);
       }, 500);
     },
+    // 加入购物车
     addCart(productId) {
       axios.post('/goods/addCart', {
         productId: productId
@@ -206,6 +213,7 @@ export default {
         }
       })
     },
+    // 关闭模态框,与子组件之间有通信
     closeModal() {
       this.mdShow = false
       this.mdShowCart = false

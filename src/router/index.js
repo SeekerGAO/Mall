@@ -8,6 +8,7 @@ import OrderSuccess from './../views/OrderSuccess.vue'
 
 Vue.use(Router)
 
+// 设置路由
 export default new Router({
   routes: [
     {

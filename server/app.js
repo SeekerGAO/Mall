@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var ejs = require('ejs')
 
+// 配置路由信息
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var goodsRouter = require('./routes/goods');
@@ -22,10 +23,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 设置访问权限
 app.use(function(req, res, next) {
 	if(req.cookies.userId) {
 		next()
 	}else {
+	  // 可以访问登录、退出、商品列表
 		if(req.originalUrl == '/users/login' || req.originalUrl == '/users/logout' || req.originalUrl.indexOf('/goods/list')>-1 ) {
 			next()
 		}else {
@@ -38,6 +41,7 @@ app.use(function(req, res, next) {
 	}
 })
 
+// 将路由注册到app实例中
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/goods', goodsRouter);

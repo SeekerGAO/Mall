@@ -16,20 +16,23 @@ mongoose.connection.on('error', () => {
 })
 
 mongoose.connection.on('disconnected', () => {
-	console.log('MongoDB connected disconnected...') 
+	console.log('MongoDB connected disconnected...')
 })
 
-//Query goods list
+// 查询商品列表
 router.get('/list', function(req, res, next) {
+    // 进行分页处理
     let page = parseInt(req.query.page) //当前第几页
     let pageSize = parseInt(req.query.pageSize) //一页多少条
     let sort = req.query.sort  //获取前端的传值‘sort’字段的值,1是升序，-1是降序
     let skip = (page-1)*pageSize
     let params = {}
 
+    // 选择价格区间内的商品
     let priceLevel = req.query.priceLevel
     var priceGt = '',priceLte = ''
 
+    // 选择查看全部商品
     if(priceLevel!='All'){
       switch (priceLevel){
         case '0':priceGt = 0;priceLte=100;break;
@@ -66,11 +69,12 @@ router.get('/list', function(req, res, next) {
   	})
 });
 
-// Add goods carts
+// 添加商品到购物车
 router.post('/addCart', function(req, res, next) {
   let userId = '100'
   let productId = req.body.productId
 
+  // 通过用户id查出其所对应的商品列表
   Users.findOne({userId: userId}, function(err, usersDoc) {
     console.log(usersDoc)
     if(err) {
@@ -82,6 +86,7 @@ router.post('/addCart', function(req, res, next) {
     }else{
       if(usersDoc) {
         let goodsItem = ''
+        // 多次添加同一商品,只增加其数量
         usersDoc.cartList.forEach(function(item) {
           if(item.productId === productId) {
             goodsItem = item
@@ -113,6 +118,7 @@ router.post('/addCart', function(req, res, next) {
                 msg : err1.message
               })
             }else{
+              // 加入购物车
               if(goodsDoc) {
                 goodsDoc.productNum = 1
                 goodsDoc.checked = 1
