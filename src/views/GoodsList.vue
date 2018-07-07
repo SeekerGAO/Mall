@@ -2,24 +2,24 @@
   <div>
     <nav-header></nav-header>
     <nav-bread>
-      <span>Goods</span>
+      <span>商品</span>
     </nav-bread>
     <div class="accessory-result-page accessory-page">
       <div class="container">
         <div class="filter-nav">
-          <span class="sortby">Sort by:</span>
-          <a href="javascript:void(0)" class="default cur">Default</a>
-          <a href="javascript:void(0)" class="price" v-bind:class="{'sort-up':sortFlag}" @click="sortGoods()">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
+          <span class="sortby">排序:</span>
+          <a href="javascript:void(0)" class="default cur">默认</a>
+          <a href="javascript:void(0)" class="price" v-bind:class="{'sort-up':sortFlag}" @click="sortGoods()">价格 <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
           <a href="javascript:void(0)" class="filterby stopPop" @click="showFilterPop">Filter by</a>
         </div>
         <div class="accessory-result">
           <!-- filter -->
           <div class="filter stopPop" id="filter" v-bind:class="{'filterby-show' : filterBy}">
             <dl class="filter-price">
-              <dt>Price:</dt>
-              <dd><a href="javascript:void(0)" v-bind:class="{'cur' : priceChecked === 'All'}" @click="setPriceFilter('All')">All</a></dd>
+              <dt>价格区间:</dt>
+              <dd><a href="javascript:void(0)" v-bind:class="{'cur' : priceChecked === 'All'}" @click="setPriceFilter('All')">全部</a></dd>
               <dd v-for="(item, index) in priceFilter">
-                <a href="javascript:void(0)" v-bind:class="{'cur' : priceChecked === index}" @click="setPriceFilter(index)">{{item.startPrice}} - {{item.endPrice}}</a>
+                <a href="javascript:void(0)" v-bind:class="{'cur' : priceChecked === index}" @click="setPriceFilter(index)">{{item.startPrice | currency("￥")}} - {{item.endPrice | currency("￥")}}</a>
               </dd>
             </dl>
           </div>
@@ -33,7 +33,7 @@
                   </div>
                   <div class="main">
                     <div class="name">{{item.productName}}</div>
-                    <div class="price">{{item.productPrice}}</div>
+                    <div class="price">{{item.productPrice | currency("￥")}}</div>
                     <div class="btn-area">
                       <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">加入购物车</a>
                     </div>
@@ -50,7 +50,7 @@
     </div>
     <div class="md-overlay" v-show="overLayFlag" @click="closePop"></div>
 
-    // 插槽
+    <!-- 插槽 -->
     <modal v-bind:mdShow="mdShow" v-on:close="closeModal()">
       <p slot="message">
         请先登录，否则无法加入到购物车！
@@ -85,7 +85,7 @@
 <script>
 import "@/assets/css/base.css"
 import "@/assets/css/product.css"
-
+import {currency} from '@/util/currency'
 
 import NavHeader from "@/components/NavHeader"
 import NavFooter from "@/components/NavFooter"
@@ -133,6 +133,10 @@ export default {
   },
   mounted() {
     this.getGoodsList()
+  },
+  // 使用金额格式工具
+  filters: {
+    currency: currency
   },
   methods: {
     // 商品列表

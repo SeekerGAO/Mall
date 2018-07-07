@@ -3,24 +3,16 @@
     <div class="footer__wrap">
       <div class="footer__secondary">
         <div class="footer__inner">
-          <div class="footer__region">
-            <span>Region</span>
-            <select class="footer__region__select">
-              <option value="en-US">USA</option>
-              <option value="zh-CN">China</option>
-              <option value="in">India</option>
-            </select>
-          </div>
           <div class="footer__secondary__nav">
-            <span>Copyright © 2017 IMooc All Rights Reserved.</span>
-            <a href="http://us.lemall.com/us/aboutUs.html">
-        About Us
+            <span>Copyright © 2017 TMALL All Rights Reserved.</span>
+            <a href="https://pages.tmall.com/wow/seller/act/zhaoshangproduce?spm=875.7931836/B.a2226n1.24.66144265WtoFel">
+        关于我们
       </a>
-            <a href="http://us.lemall.com/us/termsofUse.html">
-        Terms &amp; Conditions
+            <a href="https://helpcenter.tmall.com/index">
+        帮助中心
       </a>
-            <a href="http://us.lemall.com/us/privacyPolicy.html">
-        Privacy Policy
+            <a href="https://rule.tmall.com/tdetail-6684.htm?spm=875.7931836/B.a2226n1.31.66144265Y1Moqo&tag=self">
+        隐私权政策
       </a>
           </div>
         </div>
